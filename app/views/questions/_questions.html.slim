@@ -1,0 +1,21 @@
+- unless @questions.empty?
+  table class='table table-hover'
+    thead class='table-dark'
+      tr
+        td Title
+        td Body
+        td
+        td
+        td
+    - @questions.each do |question|
+      tr
+        td.title = question.title
+        td.body = question.body
+        td
+          = link_to 'Show', question_path(question), class: 'btn btn-primary'
+        td
+          = link_to 'Edit', edit_question_path(question), class: 'btn btn-secondary'
+        td
+          = button_to "Delete", question, method: :delete, data: { confirm: "Really?" }, class: 'btn btn-danger'
+- else
+  p Nothing!
