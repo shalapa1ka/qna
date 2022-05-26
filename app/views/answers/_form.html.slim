@@ -1,0 +1,7 @@
+= form_with model: [@question, @answer] do |form|
+  div class='form-floating mt-2'
+    = form.text_area :body, class: 'form-control', id: 'floatingBody', placeholder: 'Answer'
+    = form.label 'Answer', for: 'floatingBody'
+
+  div class='form-floating w-50 mt-2'
+    = form.submit 'Answer', class: 'btn btn-success'

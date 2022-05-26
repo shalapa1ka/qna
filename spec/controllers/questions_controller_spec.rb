@@ -62,7 +62,7 @@ describe QuestionsController do
     end
 
     context 'with invalid attributes' do
-      it 'not saves the new question in the database' do
+      it 'does not saves the new question in the database' do
         expect do
           post :create, params: { question: attributes_for(:question, title: '') }
         end.to_not change(Question, :count)

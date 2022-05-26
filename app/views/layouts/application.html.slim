@@ -2,29 +2,16 @@ doctype html
 html class='h-100'
   head
     title QNA
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
     = csrf_meta_tags
     = csp_meta_tag
-    = stylesheet_link_tag 'application'
+
   body class='d-flex flex-column h-100'
     header
-      nav class="navbar navbar-expand-lg navbar-dark bg-dark"
-        div class="container-fluid"
-          span class="navbar-brand" QNA
-          div class="collapse navbar-collapse" id="navbarNav"
-            ul class="navbar-nav me-auto mb-2 mb-md-0"
-              li class="nav-item"
-                a class="nav-link active" aria-current="page" href="#" Home
-              li class="nav-item"
-                a class="nav-link" href="#" Features
-              li class="nav-item"
-                a class="nav-link" href="#" Pricing
-              li class="nav-item"
-                a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true" Disabled
-            - if false
-              span class='text-light' Hello User
-            - else
-              a class='btn btn-outline-primary me-3' Log In
-              a class='btn btn-primary' Sing up
+      = render 'layouts/navbar'
+
     .main class='mt-5'
       .container
         .row

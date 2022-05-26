@@ -1,0 +1,6 @@
+h1 Answering on #{ @question.title }
+h3 #{ @question.body }
+
+= render 'form'
+
+= link_to 'Cancel', question_path(@question), class: 'btn btn-secondary mt-2'
