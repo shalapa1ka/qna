@@ -2,10 +2,12 @@ class QuestionsController < ApplicationController
   before_action :find_question, only: %i[show edit update destroy]
 
   def index
-    @questions = Question.all
+    @pagy, @questions = pagy Question.all
   end
 
-  def show; end
+  def show
+    @pagy, @answers = pagy @question.answers
+  end
 
   def new
     @question = Question.new
