@@ -1,12 +1,18 @@
 require 'rails_helper'
 
 describe QuestionsController do
-  let(:question) { create(:question) }
+  let(:user) { create :user }
+  let(:admin) { create :user, :admin }
+  let(:other_user) { create :user }
+  let(:question) { create :question, user: user }
+
+  before(:each) do
+    @request.env['devise.mapping'] = Devise.mappings[:user]
+    sign_in user
+  end
 
   describe 'GET #index' do
     before do
-      @questions = [build_stubbed(:question)]
-      allow(Question).to receive(:all).and_return(@questions)
       get :index
     end
 
@@ -20,7 +26,7 @@ describe QuestionsController do
   describe 'GET #show' do
     before { get :show, params: { id: question } }
 
-    it 'assings the requested question to @question' do
+    it 'assigns the requested question to @question' do
       expect(assigns(:question)).to eq question
     end
 
@@ -40,7 +46,7 @@ describe QuestionsController do
   describe 'GET #edit' do
     before { get :edit, params: { id: question } }
 
-    it 'assings the requested question to @question' do
+    it 'assigns the requested question to @question' do
       expect(assigns(:question)).to eq question
     end
 
@@ -75,22 +81,46 @@ describe QuestionsController do
 
   describe 'PATCH #update' do
     context 'with valid attributes' do
-      it 'assings the requested question to @question' do
-        patch :update, params: { id: question, question: attributes_for(:question) }
-        expect(assigns(:question)).to eq question
+      context 'owner updating' do
+        it 'assigns the requested question to @question' do
+          patch :update, params: { id: question, question: attributes_for(:question) }
+          expect(assigns(:question)).to eq question
+        end
+
+        it 'changes question attributes' do
+          patch :update, params: { id: question,
+                                   question: attributes_for(:question, title: 'new title', body: 'new body') }
+          question.reload
+          expect(question.title).to eq 'new title'
+          expect(question.body).to eq 'new body'
+        end
+
+        it 'redirects to show view' do
+          patch :update, params: { id: question, question: attributes_for(:question) }
+          expect(request).to redirect_to question_path(assigns(:question))
+        end
       end
 
-      it 'changes question attributes' do
-        patch :update, params: { id: question,
-                                 question: attributes_for(:question, title: 'new title', body: 'new body') }
-        question.reload
-        expect(question.title).to eq 'new title'
-        expect(question.body).to eq 'new body'
+      context 'not owner' do
+        it 'changes question attributes' do
+          sign_in other_user
+          patch :update, params: { id: question,
+                                   question: attributes_for(:question, title: 'new title', body: 'new body') }
+          question.reload
+          expect(question.title).to_not eq 'new title'
+          expect(question.body).to_not eq 'new body'
+        end
       end
 
-      it 'redirects to show view' do
-        patch :update, params: { id: question, question: attributes_for(:question) }
-        expect(request).to redirect_to question_path(assigns(:question))
+      context 'admin' do
+        it 'changes question attributes' do
+          sign_in admin
+          patch :update, params: { id: question,
+                                   question: attributes_for(:question, title: 'new title', body: 'new body') }
+          question.reload
+          expect(question.title).to eq 'new title'
+          expect(question.body).to eq 'new body'
+        end
       end
     end
     context 'with invalid attributes' do
@@ -107,16 +137,35 @@ describe QuestionsController do
 
   describe 'DELETE #destroy' do
     before { question }
+    describe 'owner deleting' do
+      it 'deletes question' do
+        expect do
+          delete :destroy, params: { id: question }
+        end.to change(Question, :count).by(-1)
+      end
 
-    it 'deletes question' do
-      expect do
+      it 'redirect to index view' do
         delete :destroy, params: { id: question }
-      end.to change(Question, :count).by(-1)
+        expect(response).to redirect_to questions_path
+      end
     end
 
-    it 'redirect to index view' do
-      delete :destroy, params: { id: question }
-      expect(response).to redirect_to questions_path
+    context 'non owner' do
+      it 'deletes question' do
+        sign_in other_user
+        expect do
+          delete :destroy, params: { id: question }
+        end.to_not change(Question, :count)
+      end
+    end
+
+    context 'admin' do
+      it 'deletes question' do
+        sign_in admin
+        expect do
+          delete :destroy, params: { id: question }
+        end.to change(Question, :count).by(-1)
+      end
     end
   end
 end
