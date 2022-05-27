@@ -1,5 +1,7 @@
 class QuestionsController < ApplicationController
+  before_action :authenticate_user!
   before_action :find_question, only: %i[show edit update destroy]
+  before_action :check_access, only: %i[edit update destroy]
 
   def index
     @pagy, @questions = pagy Question.all
@@ -10,13 +12,13 @@ class QuestionsController < ApplicationController
   end
 
   def new
-    @question = Question.new
+    @question = current_user.questions.new
   end
 
   def edit; end
 
   def create
-    @question = Question.new(question_params)
+    @question = current_user.questions.new(question_params)
 
     if @question.save
       redirect_to @question, notice: 'Question successfully created!'
@@ -45,5 +47,11 @@ class QuestionsController < ApplicationController
 
   def question_params
     params.require(:question).permit(:title, :body)
+  end
+
+  def check_access
+    unless current_user.admin?
+      redirect_to root_path, alert: "You have no right" unless @question.user == current_user
+    end
   end
 end

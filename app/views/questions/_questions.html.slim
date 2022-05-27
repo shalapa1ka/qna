@@ -3,14 +3,16 @@
     .container class='border mb-3'
       .row class='mb-1'
         .col class='pt-2'
+          h5 User: #{question.user.name}
           h3 = question.title
       .row
         .col-12 class='mb-3'
           span.bold = question.body
       .row
         .col-6
-          = link_to 'Show', question_path(question), class: 'btn btn-primary me-2'
-          = link_to 'Edit', edit_question_path(question), class: 'btn btn-secondary me-2'
-          = button_to "Delete", question, method: :delete, class: 'btn btn-danger mt-2 mb-2'
+          = link_to 'Show', question_path(question), class: 'btn btn-primary me-2 mb-2'
+          - if question.user == current_user or current_user.admin?
+            = link_to 'Edit', edit_question_path(question), class: 'btn btn-secondary me-2 mb-2'
+            = button_to "Delete", question, method: :delete, class: 'btn btn-danger mb-2'
 - else
   p Nothing!

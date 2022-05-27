@@ -4,11 +4,13 @@
     .container class='border mb-3'
       .row class='mb-1'
         .col class='pt-2'
+          h5 User: #{answer.user.name}
           span = answer.body
       .row class='mb-1'
         .col
-          = link_to 'Edit', edit_question_answer_path(@question, answer), class: 'btn btn-secondary'
-          = button_to "Delete", question_answer_path(@question, answer), method: :delete, class: 'btn btn-danger mt-2 mb-2'
+          - if answer.user == current_user or current_user.admin?
+            = link_to 'Edit', edit_question_answer_path(@question, answer), class: 'btn btn-secondary'
+            = button_to "Delete", question_answer_path(@question, answer), method: :delete, class: 'btn btn-danger mt-2 mb-2'
   == pagy_bootstrap_nav @pagy
 - else
   p Nothing!

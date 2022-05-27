@@ -4,6 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.0.0'
 gem 'bootsnap', require: false
 gem 'bootstrap', '~> 5.1.3'
+gem 'devise'
 gem 'importmap-rails'
 gem 'jbuilder'
 gem 'jquery-rails'
@@ -29,6 +30,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'letter_opener'
   gem 'web-console'
 end
 
