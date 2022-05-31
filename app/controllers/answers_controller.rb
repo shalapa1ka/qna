@@ -1,15 +1,14 @@
 class AnswersController < ApplicationController
+  before_action :authenticate_user!
   before_action :find_answer, only: %i[edit update destroy]
-  before_action :find_question, only: %i[new create edit update destroy]
-
-  def new
-    @answer = @question.answers.build
-  end
+  before_action :find_question
+  before_action :check_access, only: %i[edit update destroy]
 
   def edit; end
 
   def create
-    @answer = @question.answers.build(answer_params)
+    @answer = current_user.answers.build(answer_params)
+    @answer.question_id = params[:question_id]
 
     if @answer.save
       redirect_to @question, notice: 'Answer successfully created!'
@@ -20,7 +19,7 @@ class AnswersController < ApplicationController
 
   def update
     if @answer.update(answer_params)
-      redirect_to @question
+      redirect_to @question, notice: 'Answer successfully edited!'
     else
       render :edit
     end
@@ -41,6 +40,12 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body)
+    params.require(:answer).permit(:body, :user_id)
+  end
+
+  def check_access
+    unless current_user.admin?
+      redirect_to @question, alert: "You have no right" unless @answer.user == current_user
+    end
   end
 end
