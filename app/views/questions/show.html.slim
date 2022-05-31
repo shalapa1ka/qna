@@ -3,8 +3,8 @@ span = @question.body
 
 .row
   .col
-    = link_to 'Answer it', new_question_answer_path(@question), class: 'btn btn-primary mt-2 me-2'
-    = link_to 'Back', questions_path, class: 'btn btn-secondary mt-2'
+    = render 'answers/form'
+    = link_to 'Back to Questions', questions_path, class: 'btn btn-secondary mt-2'
 .row
   .col-12
     h3 Answers

@@ -4,10 +4,6 @@ class AnswersController < ApplicationController
   before_action :find_question
   before_action :check_access, only: %i[edit update destroy]
 
-  def new
-    @answer = @question.answers.build
-  end
-
   def edit; end
 
   def create
