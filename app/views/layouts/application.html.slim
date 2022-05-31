@@ -1,0 +1,24 @@
+doctype html
+html class='h-100'
+  head
+    title QNA
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+    = csrf_meta_tags
+    = csp_meta_tag
+
+  body class='d-flex flex-column h-100'
+    header
+      = render 'layouts/navbar'
+
+    .main.mt-5
+      .container
+        .row
+          .col
+            - error_type = { notice: :success, alert: :danger }
+            - flash.each do |type, msg|
+              div class="alert alert-#{error_type[type.to_sym]}" #{msg}
+            = yield
+
+    = render 'layouts/footer'

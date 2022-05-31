@@ -1,0 +1,14 @@
+h1 = @question.title
+span = @question.body
+
+.row
+  .col-12
+    h3 Answers
+    = render 'answers/answers'
+
+.row
+  .col
+    = link_to 'Answer that', new_question_answer_path(@question), class: 'btn btn-primary mt-2'
+.row
+  .col
+    = link_to 'Back', questions_path, class: 'btn btn-secondary mt-2'

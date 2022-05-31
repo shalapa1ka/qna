@@ -1,0 +1,12 @@
+nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+  .container-fluid
+    span.navbar-brand QNA
+    .collapse.navbar-collapse id="navbarNav"
+      ul.navbar-nav.me-auto.mb-2.mb-md-0
+        li.nav-item
+          = link_to 'Home', root_path, class: 'nav-link active'
+      - if false
+        span.text-light Hello User
+      - else
+        a.btn.btn-outline-primary.me-3 Log In
+        a.btn.btn-primary Sing up

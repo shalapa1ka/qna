@@ -1,0 +1,12 @@
+- if @question.answers.present?
+  - @question.answers.each do |answer|
+    .container.border.mb-3
+      .row.mb-1
+        .col.pt-2
+          span = answer.body
+      .row.mb-1
+        .col
+          = link_to 'Edit', edit_question_answer_path(@question, answer), class: 'btn btn-secondary'
+          = button_to "Delete", question_answer_path(@question, answer), method: :delete, class: 'btn btn-danger mt-2 mb-2'
+- else
+  p Nothing!
