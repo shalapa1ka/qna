@@ -1,7 +1,8 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!
   before_action :find_question, only: %i[show edit update destroy]
-  before_action :check_access, only: %i[edit update destroy]
+  before_action :authorize_question!
+  after_action :verify_authorized
 
   def index
     @pagy, @questions = pagy Question.all
@@ -49,9 +50,7 @@ class QuestionsController < ApplicationController
     params.require(:question).permit(:title, :body)
   end
 
-  def check_access
-    unless current_user.admin?
-      redirect_to root_path, alert: "You have no right" unless @question.user == current_user
-    end
+  def authorize_question!
+    authorize(@question || Question)
   end
 end

@@ -3,4 +3,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable
   has_many :answers, dependent: :destroy
   has_many :questions, dependent: :destroy
+
+  def author?(obj)
+    obj.user == self
+  end
 end

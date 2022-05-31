@@ -2,7 +2,8 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :find_answer, only: %i[edit update destroy]
   before_action :find_question
-  before_action :check_access, only: %i[edit update destroy]
+  before_action :authorize_answer!
+  after_action :verify_authorized
 
   def edit; end
 
@@ -12,8 +13,6 @@ class AnswersController < ApplicationController
 
     if @answer.save
       redirect_to @question, notice: 'Answer successfully created!'
-    else
-      render :new
     end
   end
 
@@ -43,9 +42,7 @@ class AnswersController < ApplicationController
     params.require(:answer).permit(:body, :user_id)
   end
 
-  def check_access
-    unless current_user.admin?
-      redirect_to @question, alert: "You have no right" unless @answer.user == current_user
-    end
+  def authorize_answer!
+    authorize(@answer || Answer)
   end
 end
