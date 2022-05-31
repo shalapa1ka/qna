@@ -16,9 +16,7 @@ html class='h-100'
       .container
         .row
           .col
-            - error_type = { notice: :success, alert: :danger }
-            - flash.each do |type, msg|
-              div class="alert alert-#{error_type[type.to_sym]}" #{msg}
+            = render 'layouts/flash'
             = yield
 
     = render 'layouts/footer'
