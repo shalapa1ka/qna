@@ -15,4 +15,4 @@ h2
       = f.label :remember_me
   .actions
     = f.submit "Log in"
-= render "devise/shared/links"
+= link_to "Forgot your password?", new_password_path(resource_name)

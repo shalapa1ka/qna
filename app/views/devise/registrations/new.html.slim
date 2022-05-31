@@ -26,4 +26,4 @@ h2
   = f.password_field :password_confirmation, autocomplete: "new-password"
   .actions
     = f.submit "Sign up"
-= render "devise/shared/links"
+= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name)
