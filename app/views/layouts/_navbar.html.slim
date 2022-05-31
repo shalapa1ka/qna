@@ -1,12 +1,12 @@
-nav class="navbar navbar-expand-lg navbar-dark bg-dark"
-  div class="container-fluid"
-    span class="navbar-brand" QNA
-    div class="collapse navbar-collapse" id="navbarNav"
-      ul class="navbar-nav me-auto mb-2 mb-md-0"
-        li class="nav-item"
+nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+  .container-fluid
+    span.navbar-brand QNA
+    .collapse.navbar-collapse id="navbarNav"
+      ul.navbar-nav.me-auto.mb-2.mb-md-0
+        li.nav-item
           = link_to 'Home', root_path, class: 'nav-link active'
       - if false
-        span class='text-light' Hello User
+        span.text-light Hello User
       - else
-        a class='btn btn-outline-primary me-3' Log In
-        a class='btn btn-primary' Sing up
+        a.btn.btn-outline-primary.me-3 Log In
+        a.btn.btn-primary Sing up

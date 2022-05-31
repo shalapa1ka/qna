@@ -1,11 +1,11 @@
-- unless @questions.empty?
+- if @questions.present?
   - @questions.each do |question|
-    .container class='border mb-3'
-      .row class='mb-1'
-        .col class='pt-2'
+    .container.border.mb-3
+      .row.mb-1
+        .col.pt-2
           h3 = question.title
       .row
-        .col-12 class='mb-3'
+        .col-12.mb-3
           span.bold = question.body
       .row
         .col-6

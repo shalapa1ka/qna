@@ -12,17 +12,13 @@ html class='h-100'
     header
       = render 'layouts/navbar'
 
-    .main class='mt-5'
+    .main.mt-5
       .container
         .row
           .col
+            - error_type = { notice: :success, alert: :danger }
             - flash.each do |type, msg|
-              - if type == "notice"
-                div class="alert alert-success " = msg
-              - elsif type == "alert"
-                div class="alert alert-danger " = msg
-              - else
-                div class='alert alert-<%= "#{type}" %>' = msg
+              div class="alert alert-#{error_type[type.to_sym]}" #{msg}
             = yield
 
     = render 'layouts/footer'
