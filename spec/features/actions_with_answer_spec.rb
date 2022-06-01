@@ -15,6 +15,7 @@ feature 'CRUD test for answer', js: true do
     new_answer
     expect(page).to have_content 'Answer successfully created!'
     expect(page).to have_content "User: #{user.name}"
+    expect(page).to have_content 'Test title'
 
     edit_answer
     expect(page).to have_content 'Answer successfully edited!'
@@ -26,7 +27,7 @@ feature 'CRUD test for answer', js: true do
   scenario 'User try to edit or delete not his answer' do
     sing_in_user other_user
     visit edit_question_answer_path(question, answer)
-    expect(page).to have_content 'You have no right'
+    expect(page).to have_content 'You are not authorized to perform this action!'
 
     # TODO: delete request
   end

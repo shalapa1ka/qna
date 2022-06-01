@@ -25,16 +25,12 @@ feature 'CRUD test for question', js: true do
   scenario 'User try to edit or delete not his question' do
     sing_in_user other_user
     visit edit_question_path(question)
-    expect(page).to have_content 'You have no right'
-
-    # TODO: delete request
+    expect(page).to have_content 'You are not authorized to perform this action!'
   end
 
   scenario 'Admin try to edit or delete not his question' do
     sing_in_user admin
     visit edit_question_path(question)
     expect(page).to have_content 'Editing question'
-
-    # TODO: delete request
   end
 end
