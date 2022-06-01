@@ -3,11 +3,10 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.0.0'
 gem 'bootsnap', require: false
-gem 'bootstrap', '~> 5.1.3'
+gem 'cssbundling-rails', '~> 1.1'
 gem 'devise'
-gem 'importmap-rails'
 gem 'jbuilder'
-gem 'jquery-rails'
+gem 'jsbundling-rails', '~> 1.0'
 gem 'pagy'
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
@@ -41,3 +40,6 @@ group :test do
   gem 'shoulda-matchers'
   gem 'webdrivers'
 end
+
+# Use Redis for Action Cable
+gem "redis", "~> 4.0"

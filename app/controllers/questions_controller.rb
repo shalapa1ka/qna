@@ -10,6 +10,7 @@ class QuestionsController < ApplicationController
 
   def show
     @pagy, @answers = pagy @question.answers
+    @answer = Answer.new
   end
 
   def new
@@ -37,7 +38,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    redirect_to questions_path, notice: 'Question successfully deleted!' if @question.destroy
+    redirect_to questions_path, notice: 'Question successfully deleted!', status: 303 if @question.destroy
   end
 
   private

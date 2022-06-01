@@ -25,7 +25,7 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    redirect_to @question, notice: 'Answer successfully deleted!' if @answer.destroy
+    redirect_to @question, notice: 'Answer successfully deleted!', status: 303 if @answer.destroy
   end
 
   private
