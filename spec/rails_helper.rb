@@ -8,6 +8,7 @@ require 'faker'
 require 'devise'
 require 'capybara/rspec'
 require 'support/all_macros'
+require 'pundit/rspec'
 
 
 begin

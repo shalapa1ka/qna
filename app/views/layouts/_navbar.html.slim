@@ -7,7 +7,7 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
           = link_to 'Home', root_path, class: 'nav-link active'
       - if user_signed_in?
         span.text-light.me-3 Hello, #{current_user.name}
-        = button_to 'Sing out', destroy_user_session_path, method: :delete, class: 'btn btn-outline-danger'
+        = button_to 'Sign out', destroy_user_session_path, method: :delete, class: 'btn btn-outline-danger'
       - else
         = link_to 'Sign in', new_user_session_path, class: 'btn btn-outline-primary me-2'
         = link_to 'Sign up', new_user_registration_path, class: 'btn btn-primary'

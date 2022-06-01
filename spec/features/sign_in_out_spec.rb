@@ -24,7 +24,7 @@ feature 'Sign in \ Sing out', js: true do
   scenario 'Signing out' do
     sing_in_user user
     expect(page).to have_content 'Signed in successfully.'
-    click_button 'Sign Out'
+    click_button 'Sign out'
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
 end
