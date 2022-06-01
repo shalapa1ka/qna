@@ -19,6 +19,7 @@ feature 'CRUD test for question', js: true do
 
     visit root_path
     click_on 'Delete'
+    page.driver.browser.switch_to.alert.accept
     expect(page).to have_content 'Question successfully deleted!'
   end
 

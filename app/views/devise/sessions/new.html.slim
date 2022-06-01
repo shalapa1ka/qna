@@ -1,6 +1,6 @@
 h2
   | Log in
-= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false }) do |f|
   .field
     = f.label :email
     br
@@ -15,4 +15,4 @@ h2
       = f.label :remember_me
   .actions
     = f.submit "Log in"
-= link_to "Forgot your password?", new_password_path(resource_name)
+  = link_to "Forgot your password?", new_password_path(resource_name)
