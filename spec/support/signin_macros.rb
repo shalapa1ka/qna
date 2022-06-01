@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SignInMacros
   def sing_in_user(user)
     visit new_user_session_path

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module EditQuestionMacros
   def edit_question
     click_on 'Edit'

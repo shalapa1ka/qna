@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :find_answer, only: %i[edit update destroy]
@@ -11,9 +13,7 @@ class AnswersController < ApplicationController
     @answer = current_user.answers.build(answer_params)
     @answer.question_id = params[:question_id]
 
-    if @answer.save
-      redirect_to @question, notice: 'Answer successfully created!'
-    end
+    redirect_to @question, notice: 'Answer successfully created!' if @answer.save
   end
 
   def update

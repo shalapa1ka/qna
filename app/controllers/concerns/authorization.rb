@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Authorization
   extend ActiveSupport::Concern
 
@@ -12,6 +14,5 @@ module Authorization
       flash[:alert] = 'You are not authorized to perform this action!'
       redirect_to(request.referer || root_path)
     end
-    
   end
 end
