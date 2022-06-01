@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-feature 'Sign in \ Sing out', js: true do
+feature 'Sign in \ Sing out' do
   given(:user) { create :user }
 
   scenario 'Signing in with correct credentials' do
@@ -12,7 +12,7 @@ feature 'Sign in \ Sing out', js: true do
 
   given(:other_user) { create :user }
 
-  scenario 'Signing in as another user' do
+  scenario 'Signing in as another user'do
     visit new_user_session_path
     within('.new_user') do
       fill_in 'Email', with: 'wrong@email.com'

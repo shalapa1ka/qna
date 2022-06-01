@@ -7,7 +7,7 @@ class QuestionsController < ApplicationController
   after_action :verify_authorized
 
   def index
-    @pagy, @questions = pagy Question.all
+    @pagy, @questions = pagy Question.all.ordered, link_extra: 'data-turbo-frame="pagination"'
   end
 
   def show
@@ -22,10 +22,19 @@ class QuestionsController < ApplicationController
   def edit; end
 
   def create
-    @question = current_user.questions.new(question_params)
+    @question = current_user.questions.build question_params
 
     if @question.save
-      redirect_to @question, notice: 'Question successfully created!'
+      respond_to do |format|
+        format.html do
+          flash[:notice] = 'Question successfully created!'
+          redirect_to @question
+        end
+
+        format.turbo_stream do
+          flash.now[:notice] = 'Question successfully created!'
+        end
+      end
     else
       render :new
     end
@@ -33,14 +42,32 @@ class QuestionsController < ApplicationController
 
   def update
     if @question.update(question_params)
-      redirect_to @question, notice: 'Question successfully edited!'
+      respond_to do |format|
+        format.html do
+          flash[:notice] = 'Question successfully updated!'
+          redirect_to @question
+        end
+
+        format.turbo_stream do
+          flash.now[:notice] = 'Question successfully updated!'
+        end
+      end
     else
       render :edit
     end
   end
 
   def destroy
-    redirect_to questions_path, notice: 'Question successfully deleted!', status: 303 if @question.destroy
+    @question.destroy
+    respond_to do |format|
+      format.html do
+        flash[:notice] = 'Question successfully deleted!'
+        redirect_to questions_path
+      end
+
+      format.turbo_stream { flash.now[:notice] = 'Question successfully deleted!' }
+    end
+
   end
 
   private

@@ -2,19 +2,22 @@ doctype html
 html class='h-100'
   head
     title QNA
-    = stylesheet_link_tag "application", "data-turbo-track": "reload"
-    = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
     = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag "application", "data-turbo-track": "reload", media: 'all'
+    = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
 
   body class='d-flex flex-column h-100'
     header
-      = render 'layouts/navbar'
+      = render partial: 'layouts/navbar'
 
     .main.mt-5
       .container
         .row
           .col
-            = render 'layouts/flash'
+            .flash
+              = turbo_frame_tag 'flash'
+              = render 'layouts/flash'
             = yield
 
-    = render 'layouts/footer'
+    = render partial: 'layouts/footer'
