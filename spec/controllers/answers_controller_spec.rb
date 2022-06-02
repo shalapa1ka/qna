@@ -61,10 +61,10 @@ describe AnswersController, type: :controller do
                                   question_id: question, user_id: user }
         end.to_not change(Answer, :count)
       end
-      it 're-render new view' do
+      it 're-render question view' do
         post :create, params: { answer: attributes_for(:answer, body: ''),
                                 question_id: question, user_id: user }
-        expect(request).to render_template request.referer
+        expect(request).to render_template :new
       end
     end
   end

@@ -1,19 +1,16 @@
-- if @question.answers.present?
-  - @question.answers.each do |answer|
-    .container.border.mb-3
-      .row.mb-1
-        .col.pt-2
-          span User: #{answer.user.name}
-      .row.mb-1
-        .col.pt-2
-          span = answer.body
-      .row.mb-1
-        .col
-          - if policy(answer).edit?
-            = link_to 'Edit', edit_question_answer_path(@question, answer), class: 'btn btn-secondary'
-          - if policy(answer).destroy?
-            = link_to "Delete", question_answer_path(@question, answer),
-                    class: 'btn btn-danger m-2',
-                    data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }
-- else
-  p Nothing!
+= turbo_frame_tag answer do
+  .container.border.mb-3
+    .row.mb-1
+      .col.pt-2
+        span = "User: #{answer.user.name}"
+    .row.mb-1
+      .col.pt-2
+        span = answer.body
+    .row.mb-1
+      .col
+        - if policy(answer).edit?
+          = link_to 'Edit', edit_question_answer_path(@question, answer), class: 'btn btn-secondary'
+        - if policy(answer).destroy?
+          = link_to "Delete", question_answer_path(@question, answer),
+                  class: 'btn btn-danger m-2',
+                  data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }

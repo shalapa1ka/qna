@@ -13,19 +13,42 @@ class AnswersController < ApplicationController
     @answer = current_user.answers.build(answer_params)
     @answer.question_id = params[:question_id]
 
-    redirect_to @question, notice: 'Answer successfully created!' if @answer.save
+    if @answer.save
+      respond_to do |format|
+        format.html do
+          redirect_to @question, notice: 'Answer successfully created!'
+        end
+
+        format.turbo_stream { flash.now[:notice] = 'Answer successfully created!' }
+      end
+    else
+      render :new
+    end
   end
 
   def update
     if @answer.update(answer_params)
-      redirect_to @question, notice: 'Answer successfully edited!'
+      respond_to do |format|
+        format.html do
+          redirect_to @question, notice: 'Answer successfully edited!'
+        end
+
+        format.turbo_stream { flash.now[:notice] = 'Answer successfully edited!' }
+      end
     else
       render :edit
     end
   end
 
   def destroy
-    redirect_to @question, notice: 'Answer successfully deleted!', status: 303 if @answer.destroy
+    @answer.destroy
+    respond_to do |format|
+      format.html do
+        redirect_to @question, notice: 'Answer successfully deleted!'
+      end
+
+      format.turbo_stream { flash.now[:notice] = 'Answer successfully deleted!' }
+    end
   end
 
   private
