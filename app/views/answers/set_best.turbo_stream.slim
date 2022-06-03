@@ -1,0 +1,5 @@
+- @question.answers.each do |answer|
+  = turbo_stream.replace dom_id(answer), answer
+= turbo_stream.remove @answer
+= turbo_stream.prepend 'answers', @answer
+= prepend_flash

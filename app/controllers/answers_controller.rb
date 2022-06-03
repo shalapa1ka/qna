@@ -2,7 +2,8 @@
 
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_answer, only: %i[edit update destroy]
+  before_action :find_answer, only: %i[edit update destroy set_best]
+  before_action :find_best_answer, only: :set_best
   before_action :find_question
   before_action :authorize_answer!
   after_action :verify_authorized
@@ -13,25 +14,52 @@ class AnswersController < ApplicationController
     @answer = current_user.answers.build(answer_params)
     @answer.question_id = params[:question_id]
 
-    redirect_to @question, notice: 'Answer successfully created!' if @answer.save
+    if @answer.save
+      respond_to do |format|
+        format.html { redirect_to @question, notice: 'Answer successfully created!' }
+        format.turbo_stream { flash.now[:notice] = 'Answer successfully created!' }
+      end
+    else
+      render :new
+    end
   end
 
   def update
     if @answer.update(answer_params)
-      redirect_to @question, notice: 'Answer successfully edited!'
+      respond_to do |format|
+        format.html { redirect_to @question, notice: 'Answer successfully edited!' }
+        format.turbo_stream { flash.now[:notice] = 'Answer successfully edited!' }
+      end
     else
       render :edit
     end
   end
 
+  def set_best
+    @best_answer.update(best: false)
+    @answer.update(best: true)
+    respond_to do |format|
+      format.html { redirect_to @question, notice: 'Best answer successfully selected!' }
+      format.turbo_stream { flash.now[:notice] = 'Best answer successfully selected!' }
+    end
+  end
+
   def destroy
-    redirect_to @question, notice: 'Answer successfully deleted!', status: 303 if @answer.destroy
+    @answer.destroy
+    respond_to do |format|
+      format.html { redirect_to @question, notice: 'Answer successfully deleted!' }
+      format.turbo_stream { flash.now[:notice] = 'Answer successfully deleted!' }
+    end
   end
 
   private
 
   def find_answer
     @answer = Answer.find(params[:id])
+  end
+
+  def find_best_answer
+    @best_answer = Answer.where(best: true)
   end
 
   def find_question

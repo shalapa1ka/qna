@@ -31,9 +31,7 @@ class QuestionsController < ApplicationController
           redirect_to @question
         end
 
-        format.turbo_stream do
-          flash.now[:notice] = 'Question successfully created!'
-        end
+        format.turbo_stream { flash.now[:notice] = 'Question successfully created!' }
       end
     else
       render :new
@@ -48,9 +46,7 @@ class QuestionsController < ApplicationController
           redirect_to @question
         end
 
-        format.turbo_stream do
-          flash.now[:notice] = 'Question successfully updated!'
-        end
+        format.turbo_stream { flash.now[:notice] = 'Question successfully updated!' }
       end
     else
       render :edit
@@ -67,7 +63,6 @@ class QuestionsController < ApplicationController
 
       format.turbo_stream { flash.now[:notice] = 'Question successfully deleted!' }
     end
-
   end
 
   private
