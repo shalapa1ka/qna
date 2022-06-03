@@ -6,10 +6,13 @@ span = @question.body
     = render partial: 'answers/form'
 .row
   .col
-    = link_to 'Back to Questions', questions_path, class: 'btn btn-secondary mt-2'
+    = link_to 'Back to Questions', questions_path, class: 'btn btn-secondary my-2'
 
 .row
   .col-12
     h3 Answers
-    = turbo_frame_tag 'answers' do
-      = render partial: 'answers/answer', collection: @question.answers, as: :answer, locals: { question: @question }
+    = turbo_frame_tag 'pagination' do
+      == pagy_bootstrap_nav @pagy
+      = turbo_frame_tag 'answers' do
+        = render @answers.order_best
+      == pagy_bootstrap_nav @pagy

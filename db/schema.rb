@@ -18,6 +18,7 @@ ActiveRecord::Schema[7.0].define(version: 20_220_526_141_534) do
 
   create_table 'answers', force: :cascade do |t|
     t.string 'body'
+    t.boolean 'best', default: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.bigint 'question_id'
