@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-feature 'CRUD test for question', js: true do
+feature 'CRUD test for question' do
   given(:user) { create :user }
   given(:other_user) { create :user }
   given(:admin) { create :user, :admin }
   given(:question) { create :question, user: user }
 
-  scenario 'Signed in user creating\updating\deleting question' do
+  scenario 'Signed in user creating\updating\deleting question', js: true do
     sing_in_user user
     expect(page).to have_content 'Signed in successfully.'
 
@@ -15,10 +17,11 @@ feature 'CRUD test for question', js: true do
 
     visit root_path
     edit_question
-    expect(page).to have_content 'Question successfully edited!'
+    expect(page).to have_content 'Question successfully updated!'
 
     visit root_path
     click_on 'Delete'
+    page.driver.browser.switch_to.alert.accept
     expect(page).to have_content 'Question successfully deleted!'
   end
 

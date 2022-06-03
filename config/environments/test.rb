@@ -1,7 +1,8 @@
-require "active_support/core_ext/integer/time"
+# frozen_string_literal: true
+
+require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
-
   config.cache_classes = false
   config.action_view.cache_template_loading = true
   config.eager_load = false

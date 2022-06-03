@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'support/signin_macros'
 require 'support/question/new_question_macros'
 require 'support/question/edit_question_macros'

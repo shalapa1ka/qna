@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :user do
     after(:create) do |u|
@@ -14,5 +16,4 @@ FactoryBot.define do
       admin { true }
     end
   end
-
 end

@@ -1,11 +1,13 @@
-= form_with model: @question do |form|
-  .form-floating.w-50.mt-2
-    = form.text_field :title, class: 'form-control', id: 'floatingTitle', placeholder: :title
-    = form.label :title, for: 'floatingTitle'
+= turbo_frame_tag @question do
+  = form_with model: @question do |form|
+    = render 'shared/errors', object: @question
+    .form-floating.w-50.mt-2
+      = form.text_field :title, class: 'form-control', id: 'floatingTitle', placeholder: :title
+      = form.label :title, for: 'floatingTitle'
 
-  .form-floating.w-50.mt-2
-    = form.text_area :body, class: 'form-control', id: 'floatingBody', placeholder: 'Tell about your question'
-    = form.label 'Tell about your question', for: 'floatingBody'
+    .form-floating.w-50.mt-2
+      = form.text_area :body, class: 'form-control', id: 'floatingBody', placeholder: 'Tell about your question'
+      = form.label 'Tell about your question', for: 'floatingBody'
 
-  .form-floating.w-50.mt-2
-    = form.submit 'Ask', class: 'btn btn-success'
+    .form-floating.w-50.mt-2
+      = form.submit nil, class: 'btn btn-success my-2'
