@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe AnswerPolicy do
+describe QuestionPolicy do
   subject { described_class }
   let(:user) { create :user }
   let(:other_user) { create :user }
@@ -23,7 +23,7 @@ describe AnswerPolicy do
     end
   end
 
-  permissions :update?, :edit?, :destroy? do
+  permissions :update?, :edit?, :destroy?, :set_best_answer? do
     it 'accepts access to owner' do
       expect(subject).to permit(user, question_author_user)
     end
